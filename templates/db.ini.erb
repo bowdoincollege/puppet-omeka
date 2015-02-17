@@ -1,0 +1,18 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+; Database Configuration
+;
+; Omeka requires MySQL 5 to work properly.  To configure
+; your database, replace the X's with your specific settings.
+; If you're unsure about your database information, ask your
+; server administrator, or consult the codex
+; http://omeka.org/codex/configuring_omeka_database
+;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+[database]
+host     = "localhost"
+username = "<%= @omekadb_user %>"
+password = "<%= @omekadb_password %>"
+name     = "<%= @omekadb_dbname %>"
+prefix   = "omeka_"
+;port     = ""
