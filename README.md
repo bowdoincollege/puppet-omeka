@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 Omeka Puppet Module
 ====================
 
@@ -53,6 +52,3 @@ Support
 
 Please log tickets and issues at our [project site](https://github.com/utseresearch/puppet-omeka/issues).
 =======
-# puppet-omeka
-A puppet module to install omeka
->>>>>>> 2b484c296d7ea64111738e40e61d571d52ab4731
