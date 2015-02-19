@@ -27,6 +27,7 @@ Usage
 Example:
 
     class { 'omeka':
+      omeka_hostname   => 'myhost.example.com',
       mysql_root       => 'anexamplerootpassword',
       omekadb_password => 'anomekauserdbpassword'
     }
