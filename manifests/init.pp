@@ -22,6 +22,7 @@ class omeka (
     omekadb_dbname   => $omekadb_dbname,
     omekadb_user     => $omekadb_user,
     omekadb_password => $omekadb_password,
+    require          => Archive['omeka-zip'],
   }
   
   class { '::apache': }
