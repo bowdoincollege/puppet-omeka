@@ -62,6 +62,7 @@ class omeka (
   package { 'java-1.7.0-openjdk.x86_64': ensure => 'installed', }
   
   class { '::apache::mod::php': }
+  class { '::omeka::plugins': }
   
   file { [
     "${omeka_home}/files",
@@ -84,5 +85,6 @@ class omeka (
       omeka_ver      => $omeka_ver
     }
   }
+
 
 }
