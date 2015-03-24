@@ -9,5 +9,6 @@ dependency 'puppetlabs-apache'
 dependency 'spiette-selinux' 
 dependency 'camptocamp-archive' 
 dependency 'puppetlabs-tomcat' 
+dependency 'example42-solr' 
 summary 'Puppet module for omeka installation'
 description "This puppet module installs and configures an omeka instance. It works by setting up an Apache webserver with PHP/MySQL bindings, and sets itself up for plugins. It optionally includes installation for solr in tomcat and other plugins."

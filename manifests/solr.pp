@@ -11,7 +11,8 @@ class omeka::solr (
 
   class { '::solr':
     install_source => $solr_binary,
-    config_file    => $omeka_solrconf
+    config_file    => $omeka_solrconf,
+    require        => Class['tomcat']
   }
   
   class { 'tomcat': install_from_source => false }
@@ -28,8 +29,9 @@ class omeka::solr (
   }
   
   file { '/usr/share/tomcat/conf/Catalina/localhost/solr.xml':
-    content => template('omeka/solr.xml.erb'),
-    mode    => '0644',
+    content        => template('omeka/solr.xml.erb'),
+    mode           => '0644',
+    require        => Class['tomcat']
   }
 
   archive { 'solrsearch-zip':

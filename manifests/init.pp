@@ -56,7 +56,8 @@ class omeka (
   }
 
   
-  package {'curl': ensure => installed }
+  package {'curl' : ensure => installed }
+  package {'unzip': ensure => installed }
   package { 'java-1.7.0-openjdk.x86_64': ensure => 'installed', }
   
   class { '::apache::mod::php': }
