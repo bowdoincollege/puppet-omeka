@@ -71,6 +71,7 @@ class omeka (
     "${omeka_home}/files/thumbnails",
     "${omeka_home}/files/square_thumbnails",
     "${omeka_home}/files/theme_uploads",
+    "${omeka_home}/application/logs/errors.log",
     ]:
     ensure  => 'directory',
     owner   => 'apache',
