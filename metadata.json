@@ -21,8 +21,8 @@
       "name": "puppetlabs-tomcat"
     }
   ],
-  "source": "UNKNOWN",
-  "version": "0.0.1",
+  "source": "https://github.com/utseresearch/puppet-omeka",
+  "version": "1.0.0",
   "types": [
 
   ],
@@ -42,5 +42,11 @@
   "project_page": "http://github.com/utseresearch/puppet-omeka",
   "summary": "Puppet module for omeka installation",
   "author": "Paul Nguyen",
-  "name": "utseresearch-omeka"
+  "name": "utseresearch-omeka",
+  "operatingsystem_support": [
+  {
+  "operatingsystem":"RedHat",
+  "operatingsystemrelease":[ "5.0", "6.0" ]
+  },
+ ]
 }
