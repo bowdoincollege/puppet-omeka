@@ -1,7 +1,7 @@
 # Private class. Enabled by default via solrsearch => true
 class omeka::solr (
   $solr_binary,
-  $solrplugin       = 'http://omeka.org/wordpress/wp-content/uploads/Solr-Search-2.1.0.zip',
+  $solrplugin       = 'http://omeka.org/wordpress/wp-content/uploads/Solr-Search-2.2.1.zip',
   $solr_ver         = '4.10.2',
   $omeka_ver,
   $omeka_home,
