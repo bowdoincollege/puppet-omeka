@@ -22,22 +22,7 @@
     }
   ],
   "source": "https://github.com/utseresearch/puppet-omeka",
-  "version": "1.0.0",
-  "types": [
-
-  ],
-  "checksums": {
-    "Modulefile": "00e00be2dd758a9eafbd08844f1aa70c",
-    "templates/db.ini.erb": "7c9d28af86b8a7ad7500b3a6e3cc4e86",
-    "README.md": "6e04c5c9269801000501ff543fddee3a",
-    "LICENSE": "13ed74d4b53bd90c08ceff8b07d61f67",
-    "tests/init.pp": "04777d6e24dbe26d5749259bb6a33f4c",
-    "templates/solr.xml.erb": "6f9a3a80543464c308ca1d81818d0e25",
-    "manifests/plugins.pp": "db0ab5f58697018c1d57e3690e7ecdae",
-    "manifests/init.pp": "f89756915577be1bb0453f0f6b0dfdb1",
-    "manifests/db.pp": "9a407fa72d6e5859a3af11fdfc7a0334",
-    "manifests/solr.pp": "47fdb3dfffc1b84f1cef1d79c84a7c00"
-  },
+  "version": "0.2.0",
   "description": "This puppet module installs and configures an omeka instance. It works by setting up an Apache webserver with PHP/MySQL bindings, and sets itself up for plugins. It optionally includes installation for solr in tomcat and other plugins.",
   "project_page": "http://github.com/utseresearch/puppet-omeka",
   "summary": "Puppet module for omeka installation",
