@@ -12,26 +12,24 @@
       "name": "puppetlabs-apache"
     },
     {
-      "name": "spiette-selinux"
-    },
-    {
       "name": "camptocamp-archive"
-    },
-    {
-      "name": "puppetlabs-tomcat"
     }
   ],
-  "source": "https://github.com/utseresearch/puppet-omeka",
+  "source": "https://github.com/bowdoincollege/puppet-omeka",
   "version": "0.2.0",
   "description": "This puppet module installs and configures an omeka instance. It works by setting up an Apache webserver with PHP/MySQL bindings, and sets itself up for plugins. It optionally includes installation for solr in tomcat and other plugins.",
-  "project_page": "http://github.com/utseresearch/puppet-omeka",
+  "project_page": "http://github.com/bowdoincollege/puppet-omeka",
   "summary": "Puppet module for omeka installation",
-  "author": "Paul Nguyen",
-  "name": "utseresearch-omeka",
+  "author": "Stephen Houser",
+  "name": "bowdoincollege-omeka",
   "operatingsystem_support": [
   {
   "operatingsystem":"RedHat",
   "operatingsystemrelease":[ "5.0", "6.0" ]
+  },
+  {
+  "operatingsystem":"Ubuntu",
+  "operatingsystemrelease":[ "16.04", "17.04" ]
   }
  ]
 }
