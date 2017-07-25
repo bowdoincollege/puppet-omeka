@@ -28,7 +28,7 @@ class omeka (
   # Apache/PHP Configuration
   class { '::apache': 
         default_vhost => false,
-        default_mods  => false,
+        default_mods  => true,
         mpm_module    => 'prefork',
    }
   
