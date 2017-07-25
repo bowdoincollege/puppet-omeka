@@ -42,7 +42,7 @@ class omeka (
     ]
   }
   
-  package { 'ImageMagick':  ensure => installed, }
+  package { 'imagemagick':  ensure => installed, }
   
   #class { 'selinux':
   #  mode => 'disabled',
@@ -62,7 +62,7 @@ class omeka (
 
   package {'curl' : ensure => installed }
   package {'unzip': ensure => installed }
-  package { 'java-1.7.0-openjdk.x86_64': ensure => 'installed', }
+  #package { 'java-1.7.0-openjdk.x86_64': ensure => 'installed', }
   
   class { '::apache::mod::php': }
   class { '::omeka::plugins': }
