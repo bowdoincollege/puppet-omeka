@@ -1,12 +1,12 @@
 # See README.md for usage
 class omeka (
-  $omeka_ver        = '2.2.2',
+  $omeka_ver        = '2.5.1',
   $omeka_hostname,
   $mysql_root,
   $omekadb_user     = 'omeka',
   $omekadb_password,
   $omekadb_dbname   = 'omeka_db',
-  $solrsearch       = true,
+  $solrsearch       = false,
   $solr_ver         = '4.10.2'
 ) {
 
@@ -25,7 +25,12 @@ class omeka (
     require          => Archive['omeka-zip'],
   }
   
-  class { '::apache': }
+  # Apache/PHP Configuration
+  class { '::apache': 
+        default_vhost => false,
+        default_mods  => false,
+        mpm_module    => 'prefork',
+   }
   
   apache::vhost { $omeka_hostname:
     port        => '80',
@@ -39,14 +44,13 @@ class omeka (
   
   package { 'ImageMagick':  ensure => installed, }
   
-  class { 'selinux':
-    mode => 'disabled',
-  }
+  #class { 'selinux':
+  #  mode => 'disabled',
+  #}
   
   package {'php':
     ensure => 'installed',
   }
-  
   
   archive { 'omeka-zip':
     ensure    => 'present',
@@ -56,7 +60,6 @@ class omeka (
     checksum  => false,
   }
 
-  
   package {'curl' : ensure => installed }
   package {'unzip': ensure => installed }
   package { 'java-1.7.0-openjdk.x86_64': ensure => 'installed', }
