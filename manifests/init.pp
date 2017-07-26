@@ -1,94 +1,81 @@
 # See README.md for usage
 class omeka (
-  $omeka_ver        = '2.5.1',
-  $omeka_hostname,
-  $mysql_root,
-  $omekadb_user     = 'omeka',
-  $omekadb_password,
-  $omekadb_dbname   = 'omeka_db',
-  $solrsearch       = false,
-  $solr_ver         = '4.10.2'
+  $omeka_version    = '2.5.1',
+  $web_host         = 'localhost',
+  $web_port         = 80,
+  $web_root         = "/var/www/html",
+  $mysql_root_password,
+  $omeka_db_user    = 'omeka',
+  $omeka_db_password,
+  $omeka_db_name    = 'omeka_db',
 ) {
-
-  $solr_binary      = "http://mirror.aarnet.edu.au/pub/apache/lucene/solr/${solr_ver}/solr-${solr_ver}.tgz"
-  #$solr_binary      = "http://apache.mirror.digitalpacific.com.au/lucene/solr/${solr_ver}/solr-${solr_ver}.tgz"
-  #$solr_binary      = "http://www.apache.org/dist/lucene/solr/${solr_ver}/solr-${solr_ver}.tgz"
-  $omeka_home       = "/var/www/html/omeka-${omeka_ver}"
-  $omeka_solrconf   = "${omeka_home}/plugins/SolrSearch/solr-core/omeka/conf/solrconfig.xml"
+  $omeka_home       = "{$web_root}/omeka-${omeka_version}"
+  $web_user         = "www-data"  # Ubuntu = www-data; RHEL = apache
   
-  class { '::omeka::db':
-    omeka_home       => $omeka_home,
-    mysql_root       => $mysql_root,
-    omekadb_dbname   => $omekadb_dbname,
-    omekadb_user     => $omekadb_user,
-    omekadb_password => $omekadb_password,
-    require          => Archive['omeka-zip'],
-  }
+  package { 'imagemagick': ensure => installed }
+  package { 'curl' : ensure => installed }
+  package { 'unzip': ensure => installed }
+  package { 'php': ensure => 'installed' }
+  
+  class { 'selinux':  mode => 'disabled' }
   
   # Apache/PHP Configuration
   class { '::apache': 
-        default_vhost => false,
-        default_mods  => true,
-        mpm_module    => 'prefork',
-   }
+    default_vhost => false,
+    default_mods  => true,
+    mpm_module    => 'prefork',
+  }
   
+  class { '::apache::mod::php': }
+
   apache::vhost { $omeka_hostname:
-    port        => '80',
+    port        => '${web_port}',
     docroot     => $omeka_home,
     directories => [
-      { path           => $omeka_home,
+      { 
+        path           => $omeka_home,
         allow_override => ['All'],
       }
     ]
   }
-  
-  package { 'imagemagick':  ensure => installed, }
-  
-  #class { 'selinux':
-  #  mode => 'disabled',
-  #}
-  
-  package {'php':
-    ensure => 'installed',
-  }
-  
+
   archive { 'omeka-zip':
     ensure    => 'present',
-    url       => "http://omeka.org/files/omeka-${omeka_ver}.zip",
-    target    => '/var/www/html',
+    url       => "http://omeka.org/files/omeka-${omeka_version}.zip",
+    target    => '${web_root}',
     extension => 'zip',
     checksum  => false,
   }
 
-  package {'curl' : ensure => installed }
-  package {'unzip': ensure => installed }
-  #package { 'java-1.7.0-openjdk.x86_64': ensure => 'installed', }
+  class { '::omeka::plugins': 
+  }
   
-  class { '::apache::mod::php': }
-  class { '::omeka::plugins': }
-  
+  class { '::omeka::db':
+    mysql_root_password => $mysql_root_password,
+    omeka_db_name       => $omeka_db_name,
+    omeka_db_user       => $omeka_db_user,
+    omeka_db_password   => $omeka_db_password,
+    require             => Archive['omeka-zip'],
+  }
+
   file { [
-    "${omeka_home}/files",
-    "${omeka_home}/files/original",
-    "${omeka_home}/files/fullsize",
-    "${omeka_home}/files/thumbnails",
-    "${omeka_home}/files/square_thumbnails",
-    "${omeka_home}/files/theme_uploads",
-    "${omeka_home}/application/logs/errors.log",
+      "${omeka_home}/files",
+      "${omeka_home}/files/original",
+      "${omeka_home}/files/fullsize",
+      "${omeka_home}/files/thumbnails",
+      "${omeka_home}/files/square_thumbnails",
+      "${omeka_home}/files/theme_uploads",
+      "${omeka_home}/application/logs/errors.log",
     ]:
     ensure  => 'directory',
-    owner   => 'apache',
+    owner   => '${web_user}',
     require => Archive['omeka-zip'],
   }
   
-  if ($solrsearch) {
-    class { '::omeka::solr':
-      solr_binary    => $solr_binary,
-      omeka_solrconf => $omeka_solrconf,
-      omeka_home     => $omeka_home,
-      omeka_ver      => $omeka_ver
-    }
-  }
-
-
+  file { "${omeka_home}/db.ini":
+    ensure  => present,
+    content => template('omeka/db.ini.erb'),
+    owner   => '${web_user}',
+    mode    => '0644',
+  }  
 }

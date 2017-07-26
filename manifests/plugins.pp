@@ -23,5 +23,4 @@ class omeka::plugins (
     # Install Archive_Tar php module -- on RHEL it's php-pear
     package { 'php-pear':      ensure => installed }
   }
-
 }

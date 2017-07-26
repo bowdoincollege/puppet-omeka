@@ -17,15 +17,14 @@
 #
 
 class omeka::db (
-  $mysql_root,
-  $omekadb_password,
-  $omeka_home       = '/var/www/html/omeka',
-  $omekadb_user     = 'omeka',
-  $omekadb_dbname   = 'omeka_db',
+  $omeka_db_name       = 'omeka_db',
+  $omeka_db_user       = 'omeka',
+  $omeka_db_password,
+  $mysql_root_password,
 ) {
   
   class { '::mysql::server':
-    root_password    => $mysql_root,
+    root_password    => $mysql_root_password,
     override_options => {
       'mysqld' => {
         'max_connections' => '1024'
@@ -37,26 +36,18 @@ class omeka::db (
     php_enable => true,
   }
   
-  mysql::db { $omekadb_dbname:
-    user     => $omekadb_user,
-    password => $omekadb_password,
+  mysql::db { $omekadb_db_name:
+    user     => $omeka_db_user,
+    password => $omeka_db_password,
     host     => 'localhost',
     grant    => ['ALL'],
     charset  => 'utf8',
     collate  => 'utf8_unicode_ci',
   }
   
-  file { "${omeka_home}/db.ini":
-    ensure  => present,
-    content => template('omeka/db.ini.erb'),
-    owner   => 'apache',
-    mode    => '0644',
-  }
-
-  class { 'mysql::server::backup':
-    backupuser     => 'mysqlbackup',
-    backuppassword => 'Xo4paiM9b',
-    backupdir      => '/var/mysqlbackups',
-  }
-
+#  class { 'mysql::server::backup':
+#    backupuser     => 'mysqlbackup',
+#    backuppassword => 'Xo4paiM9b',
+#    backupdir      => '/var/mysqlbackups',
+#  }
 }
