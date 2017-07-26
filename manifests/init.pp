@@ -16,9 +16,8 @@ class omeka (
   package { 'ImageMagick': ensure => installed }
   package { 'curl' : ensure => installed }
   package { 'unzip': ensure => installed }
-  package { 'php': ensure => 'installed' }
   
-  class { 'selinux':  mode => 'disabled' }
+  #class { 'selinux':  mode => 'disabled' }
   
   # Apache/PHP Configuration
   class { '::apache': 
@@ -27,8 +26,6 @@ class omeka (
     mpm_module    => 'prefork',
   }
   
-  class { '::apache::mod::php': }
-
   apache::vhost { $omeka_hostname:
     port        => '${web_port}',
     docroot     => $omeka_home,
@@ -39,6 +36,9 @@ class omeka (
       }
     ]
   }
+
+  package { 'php': ensure => 'installed' }
+  class { '::apache::mod::php': }
 
   archive { 'omeka-zip':
     ensure    => 'present',
