@@ -26,7 +26,7 @@ class omeka (
     mpm_module    => 'prefork',
   }
   
-  apache::vhost { $omeka_hostname:
+  apache::vhost { $web_host:
     port        => '${web_port}',
     docroot     => $omeka_home,
     directories => [
