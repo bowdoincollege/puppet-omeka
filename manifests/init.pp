@@ -10,6 +10,7 @@ class omeka (
   $omeka_db_name    = 'omeka_db',
 ) {
   $omeka_home       = "${web_root}/omeka-${omeka_version}"
+  $omeka_zip        = "${web_root}/omeka-${omeka_version}.zip"
   $web_user         = "apache"  # Ubuntu = www-data; RHEL = apache
   
   #package { 'imagemagick': ensure => installed }
@@ -41,13 +42,13 @@ class omeka (
   class { '::apache::mod::php': 
   }
 
-  archive { 'omeka-zip':
-    ensure    => 'present',
-    url       => "http://omeka.org/files/omeka-${omeka_version}.zip",
-    target    => "${web_root}",
-    extension => 'zip',
-    checksum  => false,
-    creates   => "${omeka_home}",
+  archive { "${omeka-zip}":
+    ensure       => 'present',
+    source       => "http://omeka.org/files/omeka-${omeka_version}.zip",
+    extract_path => "${web_root}",
+    extract      => true,
+    creates      => "${omeka_home}",
+    cleanup      => false,
   }
 
   class { '::omeka::plugins': 
@@ -58,7 +59,7 @@ class omeka (
     omeka_db_name       => $omeka_db_name,
     omeka_db_user       => $omeka_db_user,
     omeka_db_password   => $omeka_db_password,
-    require             => Archive['omeka-zip'],
+    require             => Archive["${omeka-zip}"],
   }
 
   file { [
@@ -71,14 +72,14 @@ class omeka (
     ]:
     ensure  => 'directory',
     owner   => "${web_user}",
-    require => Archive['omeka-zip'],
+    require => Archive["${omeka-zip}"],
   }
 
   file { "${omeka_home}/application/logs/errors.log":
     ensure  => file,
     owner   => "${web_user}",
     mode    => '0644',
-    require => Archive['omeka-zip'],
+    require => Archive["${omeka-zip}"],
   }  
 
   file { "${omeka_home}/db.ini":
@@ -86,6 +87,6 @@ class omeka (
     content => template('omeka/db.ini.erb'),
     owner   => "${web_user}",
     mode    => '0644',
-    require => Archive['omeka-zip'],
+    require => Archive["${omeka-zip}"],
   }  
 }
