@@ -16,12 +16,11 @@
 # included by omeka
 #
 
-class omeka::db (
-  $omeka_db_name       = 'omeka_db',
-  $omeka_db_user       = 'omeka',
-  $omeka_db_password,
-  $mysql_root_password,
-) {
+class omeka::db() {
+  $omeka_db_name       = hiera('omeka::db::name', "omeka_db")
+  $omeka_db_user       = hiera('omeka::db::user', "omeka")
+  $omeka_db_password   = hiera('omeka::db::password', undefined)
+  $mysql_root_password = hiera('mysql::user', undefined) 
   
   class { '::mysql::server':
     root_password    => $mysql_root_password,
