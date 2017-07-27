@@ -38,7 +38,8 @@ class omeka (
   }
 
   package { 'php': ensure => 'installed' }
-  class { '::apache::mod::php': }
+  class { '::apache::mod::php': 
+  }
 
   archive { 'omeka-zip':
     ensure    => 'present',
@@ -46,6 +47,7 @@ class omeka (
     target    => "${web_root}",
     extension => 'zip',
     checksum  => false,
+    creates   => "${omeka_home}",
   }
 
   class { '::omeka::plugins': 
@@ -76,6 +78,7 @@ class omeka (
     ensure  => file,
     owner   => "${web_user}",
     mode    => '0644',
+    require => Archive['omeka-zip'],
   }  
 
   file { "${omeka_home}/db.ini":
@@ -83,5 +86,6 @@ class omeka (
     content => template('omeka/db.ini.erb'),
     owner   => "${web_user}",
     mode    => '0644',
+    require => Archive['omeka-zip'],
   }  
 }
