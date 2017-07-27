@@ -9,7 +9,7 @@ class omeka (
   $omeka_db_password,
   $omeka_db_name    = 'omeka_db',
 ) {
-  $omeka_home       = "{$web_root}/omeka-${omeka_version}"
+  $omeka_home       = "${web_root}/omeka-${omeka_version}"
   $web_user         = "apache"  # Ubuntu = www-data; RHEL = apache
   
   #package { 'imagemagick': ensure => installed }
