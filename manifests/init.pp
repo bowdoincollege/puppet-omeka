@@ -72,7 +72,7 @@ class omeka (
     require => Archive['omeka-zip'],
   }
 
-  file { "${omeka_home}/application/logs/errors.log",
+  file { "${omeka_home}/application/logs/errors.log":
     ensure  => file,
     owner   => "${web_user}",
     mode    => '0644',
