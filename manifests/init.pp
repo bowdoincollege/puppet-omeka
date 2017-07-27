@@ -42,7 +42,7 @@ class omeka (
   class { '::apache::mod::php': 
   }
 
-  archive { "${omeka-zip}":
+  archive { "${omeka_zip}":
     ensure       => 'present',
     source       => "http://omeka.org/files/omeka-${omeka_version}.zip",
     extract_path => "${web_root}",
@@ -59,7 +59,7 @@ class omeka (
     omeka_db_name       => $omeka_db_name,
     omeka_db_user       => $omeka_db_user,
     omeka_db_password   => $omeka_db_password,
-    require             => Archive["${omeka-zip}"],
+    require             => Archive["${omeka_zip}"],
   }
 
   file { [
@@ -72,14 +72,14 @@ class omeka (
     ]:
     ensure  => 'directory',
     owner   => "${web_user}",
-    require => Archive["${omeka-zip}"],
+    require => Archive["${omeka_zip}"],
   }
 
   file { "${omeka_home}/application/logs/errors.log":
     ensure  => file,
     owner   => "${web_user}",
     mode    => '0644',
-    require => Archive["${omeka-zip}"],
+    require => Archive["${omeka_zip}"],
   }  
 
   file { "${omeka_home}/db.ini":
@@ -87,6 +87,6 @@ class omeka (
     content => template('omeka/db.ini.erb'),
     owner   => "${web_user}",
     mode    => '0644',
-    require => Archive["${omeka-zip}"],
+    require => Archive["${omeka_zip}"],
   }  
 }
