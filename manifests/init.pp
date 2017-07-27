@@ -17,7 +17,7 @@ class omeka (
   package { 'curl' : ensure => installed }
   package { 'unzip': ensure => installed }
   
-  #class { 'selinux':  mode => 'disabled' }
+  class { 'selinux':  mode => 'disabled' }
   
   # Apache/PHP Configuration
   class { '::apache': 
@@ -66,15 +66,20 @@ class omeka (
       "${omeka_home}/files/thumbnails",
       "${omeka_home}/files/square_thumbnails",
       "${omeka_home}/files/theme_uploads",
-      "${omeka_home}/application/logs/errors.log",
     ]:
     ensure  => 'directory',
     owner   => "${web_user}",
     require => Archive['omeka-zip'],
   }
-  
+
+  file { "${omeka_home}/application/logs/errors.log",
+    ensure  => file,
+    owner   => "${web_user}",
+    mode    => '0644',
+  }  
+
   file { "${omeka_home}/db.ini":
-    ensure  => present,
+    ensure  => file,
     content => template('omeka/db.ini.erb'),
     owner   => "${web_user}",
     mode    => '0644',
