@@ -27,7 +27,7 @@ class omeka (
   }
   
   apache::vhost { $web_host:
-    port        => '${web_port}',
+    port        => $web_port,
     docroot     => $omeka_home,
     directories => [
       { 
@@ -43,7 +43,7 @@ class omeka (
   archive { 'omeka-zip':
     ensure    => 'present',
     url       => "http://omeka.org/files/omeka-${omeka_version}.zip",
-    target    => '${web_root}',
+    target    => "${web_root}",
     extension => 'zip',
     checksum  => false,
   }
@@ -69,14 +69,14 @@ class omeka (
       "${omeka_home}/application/logs/errors.log",
     ]:
     ensure  => 'directory',
-    owner   => '${web_user}',
+    owner   => "${web_user}",
     require => Archive['omeka-zip'],
   }
   
   file { "${omeka_home}/db.ini":
     ensure  => present,
     content => template('omeka/db.ini.erb'),
-    owner   => '${web_user}',
+    owner   => "${web_user}",
     mode    => '0644',
   }  
 }
