@@ -36,7 +36,7 @@ class omeka::db (
     php_enable => true,
   }
   
-  mysql::db { $omekadb_db_name:
+  mysql::db { $omeka_db_name:
     user     => $omeka_db_user,
     password => $omeka_db_password,
     host     => 'localhost',
