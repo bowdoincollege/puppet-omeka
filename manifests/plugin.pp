@@ -10,13 +10,15 @@ define omeka::plugin(
 	$omeka_home      = "${apache_docroot}/omeka-${omeka_version}"
 
 	if $source == undef {
-		$source = http://omeka.org/wordpress/wp-content/uploads/${plugin}-${version}.zip
+		$url = "http://omeka.org/wordpress/wp-content/uploads/${plugin}-${version}.zip"
+	} else {
+		$url = $source
 	}
 
 	#"http://omeka.org/wordpress/wp-content/uploads/${plugin}-${version}.zip",
 	archive { "${omeka_home}/plugins/${plugin}.zip":
 		ensure       => "${ensure}",
-		source       => "${source}"
+		source       => "${url}",
 		extract_path => "${omeka_home}/plugins",
 		extract      => true,
 		creates      => "${omeka_home}/plugins/${plugin}",

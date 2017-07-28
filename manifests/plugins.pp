@@ -13,5 +13,5 @@ class omeka::plugins(
     package { 'poppler-utils': ensure => installed }
   }
 
-  create_resources('omeka::plugin' $plugins)
+  create_resources('omeka::plugin', $plugins)
 }
