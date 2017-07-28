@@ -9,6 +9,10 @@ class omeka() {
 
   $omeka_home      = "${apache_docroot}/omeka-${omeka_version}"
   $omeka_zip       = "${apache_docroot}/omeka-${omeka_version}.zip"
+
+  $omeka_db_name       = hiera('omeka::db::name', "omeka_db")
+  $omeka_db_user       = hiera('omeka::db::user', "omeka")
+  $omeka_db_password   = hiera('omeka::db::password', undefined)
   
   #package { 'imagemagick': ensure => installed }
   package { 'ImageMagick': ensure => installed }

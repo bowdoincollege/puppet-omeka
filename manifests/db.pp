@@ -36,9 +36,9 @@ class omeka::db() {
   }
   
   mysql::db { $omeka_db_name:
+    host     => 'localhost',
     user     => $omeka_db_user,
     password => $omeka_db_password,
-    host     => 'localhost',
     grant    => ['ALL'],
     charset  => 'utf8',
     collate  => 'utf8_unicode_ci',
