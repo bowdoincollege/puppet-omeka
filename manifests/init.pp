@@ -40,6 +40,7 @@ class omeka() {
   }
 
   package { 'php': ensure => 'installed' }
+  package { 'php-xml': ensure => 'installed' }
   class { '::apache::mod::php': 
   }
 
