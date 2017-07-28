@@ -58,7 +58,7 @@ class omeka() {
   #  require => Archive["${omeka_zip}"],
   #}
   
-  class { '::omeka:plugin': }
+  class { '::omeka::plugin': }
   omeka::plugin { 'Derrivative-Images': 
     version => "2.0",
     require => Archive["${omeka_zip}"],
