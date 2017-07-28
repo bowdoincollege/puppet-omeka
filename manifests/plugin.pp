@@ -8,20 +8,31 @@ define omeka::plugin(
 	$apache_docroot  = hiera('apache::docroot', "/var/www/html")
   	$omeka_version   = hiera('omeka::version', "2.5.1")
 	$omeka_home      = "${apache_docroot}/omeka-${omeka_version}"
+	$omeka_plugins   = "${omeka_home}/plugins"
 
 	if $source == undef {
-		$url = "http://omeka.org/wordpress/wp-content/uploads/${plugin}-${version}.zip"
+		archive { "${omeka_plugins}/${plugin}.zip":
+			ensure       => $ensure,
+			source       => "http://omeka.org/wordpress/wp-content/uploads/${plugin}-${version}.zip",
+			extract_path => $omeka_plugins,
+			extract      => true,
+			creates      => "${omeka_plugins}/${plugin}",
+			cleanup      => true,
+		}  
 	} else {
-		$url = $source
-	}
+		$plugin_dir = "${omeka_plugins}/${plugin}"
 
-	#"http://omeka.org/wordpress/wp-content/uploads/${plugin}-${version}.zip",
-	archive { "${omeka_home}/plugins/${plugin}.zip":
-		ensure       => "${ensure}",
-		source       => "${url}",
-		extract_path => "${omeka_home}/plugins",
-		extract      => true,
-		creates      => "${omeka_home}/plugins/${plugin}",
-		cleanup      => true,
-	}  
+		file { "$plugin_dir":
+    		ensure  => 'directory',
+		}
+
+		archive { "${omeka_plugins}/${plugin}.zip":
+			ensure       => $ensure,
+			source       => $source,
+			extract_path => $plugin_dir,
+			extract      => true,
+			creates      => $plugin_dir,
+			cleanup      => true,
+		}  
+	}
 }
