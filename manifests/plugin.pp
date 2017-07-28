@@ -22,7 +22,7 @@ define omeka::plugin(
 	} else {
 		$plugin_dir = "${omeka_plugins}/${plugin}"
 
-		file { "$plugin_dir":
+		file { $plugin_dir:
     		ensure  => 'directory',
 		}
 
@@ -33,7 +33,6 @@ define omeka::plugin(
 			extract      => true,
 			creates      => $plugin_dir,
 			cleanup      => true,
-			requires     => File[$plugin_dir],
 		}  
 	}
 }
