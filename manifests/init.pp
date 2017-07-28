@@ -54,16 +54,18 @@ class omeka() {
     cleanup      => false,
   }
 
-  #class { '::omeka::plugins': 
-  #  require => Archive["${omeka_zip}"],
-  #}
-  
-  #class { '::omeka::plugin': }
-
-  omeka::plugin { 'Derivative-Images': 
-    version => "2.0",
+  class { '::omeka::plugins': 
+    plugins => {
+       'Derivative-Images' => { version => "2.0" },
+       'Ldap' => { source => "https://github.com/downloads/BGSU-LITS/LDAP-Plugin/Ldap-0.3.0.zip" },
+    }
     require => Archive["${omeka_zip}"],
   }
+  
+  #omeka::plugin { 'Derivative-Images': 
+  #  version => "2.0",
+  #  require => Archive["${omeka_zip}"],
+  #}
 
   class { '::omeka::db':
     require => Archive["${omeka_zip}"],

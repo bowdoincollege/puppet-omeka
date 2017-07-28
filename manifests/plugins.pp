@@ -1,5 +1,7 @@
 # omeka plugins managed here
-class omeka::plugins() {
+class omeka::plugins(
+  $plugins,
+) {
   $pdfsearch       = false
 
   # The plugin system dependencies
@@ -11,6 +13,5 @@ class omeka::plugins() {
     package { 'poppler-utils': ensure => installed }
   }
 
-  #class { '::omeka:plugin:Derrivative-Images': version => "2.0" }
-
+  create_resources('omeka::plugin' $plugins)
 }
