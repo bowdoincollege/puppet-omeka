@@ -57,16 +57,18 @@ class omeka() {
   class { '::omeka::plugins': 
     plugins => {
        'Derivative-Images' => { version => "2.0" },
-       'HTML5-Media': { version => '2.6' },
-       'Ldap' => { source => "https://github.com/downloads/BGSU-LITS/LDAP-Plugin/Ldap-0.3.0.zip" },
+       'HTML5-Media'       => { version => '2.6' },
+       'Ldap'              => { source => 'https://github.com/BGSU-LITS/LDAP-Plugin/archive/0.3.0.zip' },
     },
     require => Archive["${omeka_zip}"],
   }
-  
-  #omeka::plugin { 'Derivative-Images': 
-  #  version => "2.0",
-  #  require => Archive["${omeka_zip}"],
-  #}
+
+  class { '::omeka:themes':
+    themes => {
+      'clips' => { source => 'https://github.com/bowdoincollege/clips-omeka-theme/archive/v1.0.zip' }
+    },
+   require => Archive["${omeka_zip}"],
+  }
 
   class { '::omeka::db':
     require => Archive["${omeka_zip}"],
