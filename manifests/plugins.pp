@@ -10,4 +10,7 @@ class omeka::plugins() {
   if ($pdfsearch) {
     package { 'poppler-utils': ensure => installed }
   }
+
+  class { '::omeka:plugin:Derrivative-Images': version => "2.0" }
+
 }

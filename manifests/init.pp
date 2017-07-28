@@ -54,10 +54,15 @@ class omeka() {
     cleanup      => false,
   }
 
-  class { '::omeka::plugins': 
+  #class { '::omeka::plugins': 
+  #  require => Archive["${omeka_zip}"],
+  #}
+  
+  class { '::omeka:plugin:Derrivative-Images': 
+    version => "2.0" 
     require => Archive["${omeka_zip}"],
   }
-  
+
   class { '::omeka::db':
     require => Archive["${omeka_zip}"],
   }
