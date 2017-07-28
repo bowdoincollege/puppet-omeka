@@ -60,7 +60,7 @@ class omeka() {
   
   #class { '::omeka::plugin': }
 
-  omeka::plugin { 'Derrivative-Images': 
+  omeka::plugin { 'Derivative-Images': 
     version => "2.0",
     require => Archive["${omeka_zip}"],
   }

@@ -11,6 +11,6 @@ class omeka::plugins() {
     package { 'poppler-utils': ensure => installed }
   }
 
-  class { '::omeka:plugin:Derrivative-Images': version => "2.0" }
+  #class { '::omeka:plugin:Derrivative-Images': version => "2.0" }
 
 }
