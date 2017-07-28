@@ -57,6 +57,7 @@ class omeka() {
   class { '::omeka::plugins': 
     plugins => {
        'Derivative-Images' => { version => "2.0" },
+       'HTML5-Media': { version => '2.6' },
        'Ldap' => { source => "https://github.com/downloads/BGSU-LITS/LDAP-Plugin/Ldap-0.3.0.zip" },
     },
     require => Archive["${omeka_zip}"],
