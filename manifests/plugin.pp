@@ -33,6 +33,7 @@ define omeka::plugin(
 			extract      => true,
 			creates      => $plugin_dir,
 			cleanup      => true,
+			requires     => File[$plugin_dir],
 		}  
 	}
 }
