@@ -7,13 +7,16 @@ define omeka::theme(
 ) {
   $apache_docroot  = hiera('apache::docroot', "/var/www/html")
   $omeka_version   = hiera('omeka::version', "2.5.1")
+
   $omeka_home      = "${apache_docroot}/omeka-${omeka_version}"
   $omeka_themes    = "${omeka_home}/themes"
+
   if $source == undef {
   	$url = "http://omeka.org/wordpress/wp-content/uploads/${name}-${version}.zip"
   } else {
   	$url = $source
   }
+  
   archive { "${omeka_themes}/${name}.zip":
   	ensure       => $ensure,
   	source       => $url,

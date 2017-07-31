@@ -63,7 +63,7 @@ class omeka() {
     require => Archive["${omeka_zip}"],
   }
 
-  class { '::omeka:themes':
+  class { '::omeka::themes':
     themes => {
       'clips' => { source => 'https://github.com/bowdoincollege/clips-omeka-theme/archive/v1.0.zip' }
     },
