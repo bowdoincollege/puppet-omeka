@@ -6,7 +6,7 @@ define omeka::plugin(
 	$source  = undef,
 ) {
 	$apache_docroot  = hiera('apache::docroot', "/var/www/html")
-  	$omeka_version   = hiera('omeka::version', "2.5.1")
+  $omeka_version   = hiera('omeka::version', "2.5.1")
 
 	$omeka_home      = "${apache_docroot}/omeka-${omeka_version}"
 	$omeka_plugins   = "${omeka_home}/plugins"

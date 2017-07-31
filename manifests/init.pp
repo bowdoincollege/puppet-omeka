@@ -51,7 +51,7 @@ class omeka() {
     extract_path => "${apache_docroot}",
     extract      => true,
     creates      => "${omeka_home}",
-    cleanup      => false,
+    cleanup      => true,
   }
 
   class { '::omeka::plugins': 

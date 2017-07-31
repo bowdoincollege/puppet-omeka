@@ -30,7 +30,6 @@ define omeka::theme(
 class omeka::themes(
   $themes,
 ) {
-
   create_resources('omeka::theme', $themes)
 }
 
