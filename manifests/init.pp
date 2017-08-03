@@ -18,6 +18,12 @@ class omeka() {
   package { 'ImageMagick': ensure => installed }
   package { 'curl' : ensure => installed }
   package { 'unzip': ensure => installed }
+
+  #rpm --import http://li.nux.ro/download/nux/RPM-GPG-KEY-nux.ro
+  #rpm -Uvh http://li.nux.ro/download/nux/dextop/el7/x86_64/nux-dextop-release-0-1.el7.nux.noarch.rpm
+  #yum -y install ffmpeg ffmpeg-devel 
+  
+  #package { 'ffmpeg': ensure => installed }
   
   class { 'selinux':  mode => 'permissive' }
   
@@ -65,8 +71,7 @@ class omeka() {
 
   class { '::omeka::themes':
     themes => {
-#      'clips' => { source => 'https://github.com/bowdoincollege/clips-omeka-theme/archive/v1.0.zip' }
-      'clips' => { source => 'https://bowdoin.edu/~houser/clips-omeka-theme-1.0.zip' }
+      'clips-omeka-theme' => { source => 'https://github.com/bowdoincollege/clips-omeka-theme/archive/v1.1.zip' }
     },
    require => Archive["${omeka_zip}"],
   }
