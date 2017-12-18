@@ -53,7 +53,7 @@ class omeka() {
 
   archive { "${omeka_zip}":
     ensure       => 'present',
-    source       => 'https://github.com/omeka/Omeka/releases/download/v${omeka_version}/omeka-${omeka_version}.zip',
+    source       => "https://github.com/omeka/Omeka/releases/download/v${omeka_version}/omeka-${omeka_version}.zip",
     extract_path => "${apache_docroot}",
     extract      => true,
     creates      => "${omeka_home}",
